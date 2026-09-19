@@ -30,6 +30,41 @@ tester.run("no-restricted-disable", rule, {
   ],
   invalid: withPrefixes([
     {
+      code: "/*eslint-disable-line eqeqeq, no-undef, no-redeclare*/",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallow("eqeqeq")],
+    },
+    {
+      code: "//eslint-disable-line",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallowAll("eslint-disable-line")],
+    },
+    {
+      code: "/*eslint-disable-line*/",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallowAll("eslint-disable-line")],
+    },
+    {
+      code: "//eslint-disable-next-line eqeqeq, no-undef, no-redeclare",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallow("eqeqeq")],
+    },
+    {
+      code: "/*eslint-disable-next-line eqeqeq, no-undef, no-redeclare*/",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallow("eqeqeq")],
+    },
+    {
+      code: "//eslint-disable-next-line",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallowAll("eslint-disable-next-line")],
+    },
+    {
+      code: "/*eslint-disable-next-line*/",
+      options: ["*", "!no-undef", "!no-redeclare"],
+      errors: [disallowAll("eslint-disable-next-line")],
+    },
+    {
       code: "/*eslint-disable eqeqeq*/",
       options: ["eqeqeq"],
       errors: [{ ...disallow("eqeqeq"), line: 1, column: 17, endLine: 1, endColumn: 23 }],

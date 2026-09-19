@@ -42,8 +42,9 @@ const RULE_ID_DELIMITER = /[\s,]+/u;
  * Every directive comment in the file, in source order.
  *
  * Differences from ESLint worth knowing: Oxlint honours `// eslint-disable` and `// eslint-enable`
- * written as line comments, so they count here too. The configuration kinds (`eslint`, `global`
- * and friends) only count in block comments, which is the only place ESLint reads them.
+ * written as line comments, and a `disable-line` block comment that spans lines, so both count
+ * here too. The configuration kinds (`eslint`, `global` and friends) only count in block comments,
+ * which is the only place ESLint reads them.
  */
 export function getDirectiveComments(
   sourceCode: SourceCode,
@@ -76,21 +77,17 @@ function parseDirectiveComment(
   if (comment.type === "Shebang") {
     return null;
   }
-  const { text, description } = splitDescription(comment.value);
+  // Match the label first. A description separator only counts after it, so `eslint-disable--x`
+  // is not a directive, which is how both linters read it.
+  const text = comment.value.trimStart();
 
   const disable = DISABLE_PATTERN.exec(text);
   if (disable !== null) {
-    const disableKind = disable[2] as DisableKind;
-    // Both linters ignore a disable-line comment that spans lines, so it is not a directive.
-    if (disableKind === "disable-line" && comment.loc.start.line !== comment.loc.end.line) {
-      return null;
-    }
     return {
       kind: disable[0],
       prefix: disable[1] as Prefix,
-      disableKind,
-      value: text.slice(disable[0].length).trim(),
-      description,
+      disableKind: disable[2] as DisableKind,
+      ...splitDescription(text.slice(disable[0].length)),
       builtin: true,
       node: comment,
     };
@@ -103,8 +100,7 @@ function parseDirectiveComment(
         kind: config[0],
         prefix: null,
         disableKind: null,
-        value: text.slice(config[0].length).trim(),
-        description,
+        ...splitDescription(text.slice(config[0].length)),
         builtin: true,
         node: comment,
       };
@@ -118,8 +114,7 @@ function parseDirectiveComment(
         kind: extra[0],
         prefix: null,
         disableKind: null,
-        value: text.slice(extra[0].length).trim(),
-        description,
+        ...splitDescription(text.slice(extra[0].length)),
         builtin: false,
         node: comment,
       };
@@ -130,31 +125,31 @@ function parseDirectiveComment(
 }
 
 /**
- * Splits a comment into the directive text and its description.
+ * Splits what follows a directive label into its value and its description.
  *
  * Mirrors what Oxlint's Rust parser does (`crates/oxc_linter/src/disable_directives.rs`): the
  * description starts at the first `--`, or at a single `-` with whitespace on both sides. ESLint
  * only knows the `--` form, so a plugin that follows ESLint here would disagree with Oxlint about
  * which rule names a directive lists.
  */
-function splitDescription(value: string): { text: string; description: string | null } {
-  for (let i = 0; i < value.length; i++) {
-    if (value[i] !== "-") {
+function splitDescription(rest: string): { value: string; description: string | null } {
+  for (let i = 0; i < rest.length; i++) {
+    if (rest[i] !== "-") {
       continue;
     }
-    const next = value[i + 1];
-    const isSeparator = next === "-" || (isWhitespace(value[i - 1]) && isWhitespace(next));
+    const next = rest[i + 1];
+    const isSeparator = next === "-" || (isWhitespace(rest[i - 1]) && isWhitespace(next));
     if (!isSeparator) {
       continue;
     }
     let end = i;
-    while (value[end] === "-") {
+    while (rest[end] === "-") {
       end++;
     }
-    const description = value.slice(end).trim();
-    return { text: value.slice(0, i).trim(), description: description === "" ? null : description };
+    const description = rest.slice(end).trim();
+    return { value: rest.slice(0, i).trim(), description: description === "" ? null : description };
   }
-  return { text: value.trim(), description: null };
+  return { value: rest.trim(), description: null };
 }
 
 function isWhitespace(char: string | undefined): boolean {

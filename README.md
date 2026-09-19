@@ -1,4 +1,4 @@
-<img src="assets/logo.svg" width="96" align="right" alt="">
+<img src="https://raw.githubusercontent.com/tunderadev/oxlint-plugin-directive-comments/main/assets/logo.svg" width="96" align="right" alt="">
 
 # oxlint-plugin-directive-comments
 
@@ -53,11 +53,12 @@ Or `.oxlintrc.json`. A string `extends` does not carry `jsPlugins` across ([oxc#
     "directive-comments/no-aggregating-enable": "error",
     "directive-comments/no-duplicate-disable": "error",
     "directive-comments/no-unlimited-disable": "error",
-    "directive-comments/no-unsupported-directive": "warn",
-    "directive-comments/require-description": "error"
+    "directive-comments/no-unsupported-directive": "warn"
   }
 }
 ```
+
+That is what `recommended` enables. `require-description` is the rule people ask for by name, and it is one more line: `"directive-comments/require-description": "error"`.
 
 The same package loads in ESLint 9: `plugins: { "directive-comments": directiveComments }`, then enable rules under that prefix.
 
@@ -90,7 +91,9 @@ The same package loads in ESLint 9: `plugins: { "directive-comments": directiveC
 - Oxlint reads ` -- reason` and ` - reason` as a description. ESLint only reads `--`. `require-description` accepts both; write `--` if both linters run.
 - Option lists such as `ignore` and `allow` match the directive exactly as written. To cover both spellings, list both: `["eslint-disable", "oxlint-disable"]`.
 - Oxlint's own `--report-unused-disable-directives` can report the same comment `disable-enable-pair` does. That is two true statements about one comment, not a conflict.
-- Reports land on the text between the comment delimiters, which is the one span the comment's own `disable` never covers. A `/* oxlint-disable */` at the top of a file cannot hide the report about itself.
+- In Oxlint, reports land on the text between the comment delimiters, which is the one span the comment's own `disable` never covers. A `/* oxlint-disable */` at the top of a file cannot hide the report about itself. Under ESLint the plugin reports at column -1, as the upstream plugin does.
+- A directive can still hide reports about a different directive. In Oxlint, `// oxlint-disable-next-line` silences everything this plugin would say about a directive on the next line, and a `/* oxlint-disable */` block silences reports about every comment below it, in both linters. Those are the directives doing their job.
+- Oxlint also honours a `/* oxlint-disable-line */` block comment that spans lines. ESLint ignores it. This plugin counts it.
 
 ## Contributing
 

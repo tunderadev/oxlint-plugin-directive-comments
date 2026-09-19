@@ -29,8 +29,12 @@ tester.run("no-unlimited-disable", rule, {
     ]),
     "/* eslint no-undef: off */",
     "/* eslint-disable-line\n eqeqeq */",
+    // Not a directive: the label needs whitespace or the end after it.
+    "/* eslint-disable-- x */",
   ],
   invalid: withPrefixes([
+    // Oxlint honours a disable-line block comment that spans lines.
+    { code: "/* eslint-disable-line\n */", errors: [unexpected("eslint-disable-line")] },
     {
       code: "/*eslint-disable */",
       errors: [{ ...unexpected("eslint-disable"), line: 1, column: 2, endLine: 1, endColumn: 17 }],

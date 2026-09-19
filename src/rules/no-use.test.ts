@@ -32,7 +32,7 @@ tester.run("no-use", rule, {
     "// globals",
     "// eslint-env",
     "/* just eslint in a normal comment */",
-    "/* eslint-disable-line\n spans lines, so it is not a directive */",
+    "/* eslint-disable--x is not a directive */",
     { code: "/* eslint */", options: [{ allow: ["eslint"] }] },
     { code: "/* eslint-env */", options: [{ allow: ["eslint-env"] }] },
     { code: "/* exported */", options: [{ allow: ["exported"] }] },
@@ -50,6 +50,8 @@ tester.run("no-use", rule, {
   ],
   invalid: [
     ...withPrefixes([
+      // Oxlint honours a disable-line block comment that spans lines.
+      { code: "/* eslint-disable-line\n */", errors: [disallow("eslint-disable-line")] },
       { code: "/* eslint-enable */", errors: [disallow("eslint-enable")] },
       { code: "/* eslint-disable */", errors: [disallow("eslint-disable")] },
       // Oxlint honours these as line comments, so they count.

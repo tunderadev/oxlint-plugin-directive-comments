@@ -26,11 +26,16 @@ tester.run("prefer-oxlint-directive", rule, {
     "/* eslint-env node */",
     "/* global $ */",
     // Not directives.
-    "/* eslint-disable-line\n spans lines */",
+    "/* eslint-disable--x */",
     "/* the words eslint-disable in prose */",
     "// eslint-disabled",
   ],
   invalid: [
+    {
+      code: "/* eslint-disable-line\n no-undef */",
+      output: "/* oxlint-disable-line\n no-undef */",
+      errors: [prefer("eslint-disable-line")],
+    },
     {
       code: "// eslint-disable-next-line no-undef",
       output: "// oxlint-disable-next-line no-undef",

@@ -26,8 +26,9 @@ tester.run("require-description", rule, {
       "// eslint-disable-next-line eqeqeq -- description",
       // Oxlint also reads a single dash with whitespace on both sides as a description.
       "// eslint-disable-next-line eqeqeq - description",
-      // Not directives: a disable-line comment cannot span lines, and this is prose.
-      "/* eslint-disable-line\n eqeqeq */",
+      // Not directives: the label needs whitespace or the end after it, and this is prose.
+      "/* eslint-disable--x */",
+      "// eslint-disable-line--reason",
       "/* just eslint in a normal comment */",
       { code: "/* eslint-enable */", options: [{ ignore: ["eslint-enable"] }] },
       { code: "/* eslint-disable */", options: [{ ignore: ["eslint-disable"] }] },
@@ -41,6 +42,7 @@ tester.run("require-description", rule, {
     ]),
     '/* eslint eqeqeq: "off", curly: "error" -- Here\'s a description about why this configuration is necessary. */',
     "/* eslint-env node -- description */",
+    "/* eslint-env -- description */",
     "/* exported -- description */",
     "/* global -- description */",
     "/* globals -- description */",
@@ -59,6 +61,8 @@ tester.run("require-description", rule, {
   ],
   invalid: [
     ...withPrefixes([
+      // Oxlint honours a disable-line block comment that spans lines. ESLint does not.
+      { code: "/* eslint-disable-line\n eqeqeq */", errors: [missing("eslint-disable-line")] },
       { code: "/* eslint-enable */", errors: [missing("eslint-enable")] },
       { code: "/* eslint-enable eqeqeq */", errors: [missing("eslint-enable")] },
       { code: "/* eslint-disable eqeqeq */", errors: [missing("eslint-disable")] },

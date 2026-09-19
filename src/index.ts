@@ -1,4 +1,5 @@
 import { eslintCompatPlugin } from "@oxlint/plugins";
+import type { OxlintConfig } from "oxlint";
 import disableEnablePair from "./rules/disable-enable-pair.ts";
 import noAggregatingEnable from "./rules/no-aggregating-enable.ts";
 import noDuplicateDisable from "./rules/no-duplicate-disable.ts";
@@ -26,11 +27,6 @@ export const rules = {
   // new-rule:end
 };
 
-const plugin = eslintCompatPlugin({
-  meta: { name },
-  rules,
-});
-
 export const configs = {
   recommended: {
     jsPlugins: ["oxlint-plugin-directive-comments"],
@@ -43,7 +39,9 @@ export const configs = {
       [`${name}/no-unsupported-directive`]: "warn",
       // new-rule:recommended:end
     },
-  },
+  } satisfies OxlintConfig,
 };
 
-export default plugin;
+// `configs` rides on the default export too, so `plugin.configs.recommended` works in
+// oxlint.config.ts the way the README shows.
+export default Object.assign(eslintCompatPlugin({ meta: { name }, rules }), { configs });
