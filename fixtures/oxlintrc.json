@@ -1,5 +1,7 @@
 {
   "plugins": [],
   "jsPlugins": ["../dist/index.mjs"],
-  "rules": {}
+  "rules": {
+    "directive-comments/require-description": "error"
+  }
 }
