@@ -1,7 +1,5 @@
 {
   "plugins": [],
   "jsPlugins": ["../dist/index.mjs"],
-  "rules": {
-    "template/no-fixme": "error"
-  }
+  "rules": {}
 }

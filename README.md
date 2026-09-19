@@ -1,10 +1,10 @@
 <img src="assets/logo.svg" width="96" align="right" alt="">
 
-# oxlint-plugin-template
+# oxlint-plugin-directive-comments
 
-[![npm version](https://img.shields.io/npm/v/oxlint-plugin-template?style=flat&colorA=080f12&colorB=9ca3af)](https://npmjs.com/package/oxlint-plugin-template)
-[![npm downloads](https://img.shields.io/npm/dm/oxlint-plugin-template?style=flat&colorA=080f12&colorB=9ca3af)](https://npmjs.com/package/oxlint-plugin-template)
-[![CI](https://github.com/__OWNER__/oxlint-plugin-template/actions/workflows/ci.yml/badge.svg)](https://github.com/__OWNER__/oxlint-plugin-template/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/oxlint-plugin-directive-comments?style=flat&colorA=080f12&colorB=9ca3af)](https://npmjs.com/package/oxlint-plugin-directive-comments)
+[![npm downloads](https://img.shields.io/npm/dm/oxlint-plugin-directive-comments?style=flat&colorA=080f12&colorB=9ca3af)](https://npmjs.com/package/oxlint-plugin-directive-comments)
+[![CI](https://github.com/tunderadev/oxlint-plugin-directive-comments/actions/workflows/ci.yml/badge.svg)](https://github.com/tunderadev/oxlint-plugin-directive-comments/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-080f12?style=flat&colorA=080f12&colorB=9ca3af)](LICENSE)
 
 **DESCRIPTION**
@@ -18,10 +18,10 @@ It catches things like:
 ## Install
 
 ```sh
-npm i -D oxlint oxlint-plugin-template
-pnpm add -D oxlint oxlint-plugin-template
-yarn add -D oxlint oxlint-plugin-template
-bun add -d oxlint oxlint-plugin-template
+npm i -D oxlint oxlint-plugin-directive-comments
+pnpm add -D oxlint oxlint-plugin-directive-comments
+yarn add -D oxlint oxlint-plugin-directive-comments
+bun add -d oxlint oxlint-plugin-directive-comments
 ```
 
 ## Use
@@ -30,7 +30,7 @@ bun add -d oxlint oxlint-plugin-template
 
 ```ts
 import { defineConfig } from "oxlint";
-import plugin from "oxlint-plugin-template";
+import plugin from "oxlint-plugin-directive-comments";
 
 export default defineConfig({
   extends: [plugin.configs.recommended],
@@ -41,7 +41,7 @@ Or `.oxlintrc.json`:
 
 ```json
 {
-  "jsPlugins": ["oxlint-plugin-template"],
+  "jsPlugins": ["oxlint-plugin-directive-comments"],
   "rules": {
     "template/no-fixme": "warn"
   }
@@ -56,9 +56,9 @@ The same package loads in ESLint 9: `plugins: { template: plugin }`.
 
 <!-- rules:start -->
 
-| Rule                               | What it flags              | 🔧  | ✅  |
-| ---------------------------------- | -------------------------- | --- | --- |
-| [no-fixme](docs/rules/no-fixme.md) | Comments containing FIXME. |     | ✅  |
+| Rule                                                     | What it flags                                         | 🔧  | ✅  |
+| -------------------------------------------------------- | ----------------------------------------------------- | --- | --- |
+| [require-description](docs/rules/require-description.md) | Require a reason after -- on every directive comment. |     | ✅  |
 
 <!-- rules:end -->
 

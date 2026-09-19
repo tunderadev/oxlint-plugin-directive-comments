@@ -1,13 +1,12 @@
 import { eslintCompatPlugin } from "@oxlint/plugins";
-import noFixme from "./rules/no-fixme.ts";
+import requireDescription from "./rules/require-description.ts";
 
-// The short name people write in rule ids, as in "template/no-fixme".
-// Change it in init-template, or by hand if you skipped the script.
-export const name = "template";
+// The short name people write in rule ids, as in "directive-comments/require-description".
+export const name = "directive-comments";
 
 export const rules = {
   // new-rule:start
-  "no-fixme": noFixme,
+  "require-description": requireDescription,
   // new-rule:end
 };
 
@@ -18,10 +17,10 @@ const plugin = eslintCompatPlugin({
 
 export const configs = {
   recommended: {
-    jsPlugins: ["oxlint-plugin-template"],
+    jsPlugins: ["oxlint-plugin-directive-comments"],
     rules: {
       // new-rule:recommended:start
-      [`${name}/no-fixme`]: "warn",
+      [`${name}/require-description`]: "error",
       // new-rule:recommended:end
     },
   },
