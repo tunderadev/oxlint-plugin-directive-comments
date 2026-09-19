@@ -1,17 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "security:minimumReleaseAgeNpm",
-    ":semanticCommits"
-  ],
+  "extends": ["config:recommended", "security:minimumReleaseAgeNpm", ":semanticCommits"],
   "packageRules": [
     {
-      "matchPackageNames": [
-        "oxlint",
-        "@oxlint/plugins",
-        "vite-plus"
-      ],
+      "matchPackageNames": ["oxlint", "@oxlint/plugins", "vite-plus"],
       "groupName": "oxlint and vite-plus"
     }
   ]
