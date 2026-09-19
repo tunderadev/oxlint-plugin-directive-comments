@@ -1,10 +1,16 @@
 {
   "name": "oxlint-plugin-directive-comments",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Lint your oxlint-disable and eslint-disable comments.",
   "keywords": [
+    "directive-comments",
+    "eslint",
+    "eslint-comments",
+    "eslint-disable",
+    "eslint-plugin",
     "lint",
     "oxlint",
+    "oxlint-disable",
     "oxlint-plugin"
   ],
   "homepage": "https://github.com/tunderadev/oxlint-plugin-directive-comments#readme",
