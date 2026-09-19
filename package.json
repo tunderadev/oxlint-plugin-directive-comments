@@ -41,7 +41,8 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
-    "@oxlint/plugins": "^1.83.0"
+    "@oxlint/plugins": "^1.83.0",
+    "ignore": "^7.0.9"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",

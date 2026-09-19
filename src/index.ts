@@ -1,4 +1,10 @@
 import { eslintCompatPlugin } from "@oxlint/plugins";
+import disableEnablePair from "./rules/disable-enable-pair.ts";
+import noAggregatingEnable from "./rules/no-aggregating-enable.ts";
+import noDuplicateDisable from "./rules/no-duplicate-disable.ts";
+import noRestrictedDisable from "./rules/no-restricted-disable.ts";
+import noUnlimitedDisable from "./rules/no-unlimited-disable.ts";
+import noUse from "./rules/no-use.ts";
 import requireDescription from "./rules/require-description.ts";
 
 // The short name people write in rule ids, as in "directive-comments/require-description".
@@ -6,6 +12,12 @@ export const name = "directive-comments";
 
 export const rules = {
   // new-rule:start
+  "disable-enable-pair": disableEnablePair,
+  "no-aggregating-enable": noAggregatingEnable,
+  "no-duplicate-disable": noDuplicateDisable,
+  "no-restricted-disable": noRestrictedDisable,
+  "no-unlimited-disable": noUnlimitedDisable,
+  "no-use": noUse,
   "require-description": requireDescription,
   // new-rule:end
 };
@@ -20,7 +32,10 @@ export const configs = {
     jsPlugins: ["oxlint-plugin-directive-comments"],
     rules: {
       // new-rule:recommended:start
-      [`${name}/require-description`]: "error",
+      [`${name}/disable-enable-pair`]: "error",
+      [`${name}/no-aggregating-enable`]: "error",
+      [`${name}/no-duplicate-disable`]: "error",
+      [`${name}/no-unlimited-disable`]: "error",
       // new-rule:recommended:end
     },
   },

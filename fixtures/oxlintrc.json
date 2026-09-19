@@ -2,6 +2,26 @@
   "plugins": [],
   "jsPlugins": ["../dist/index.mjs"],
   "rules": {
+    "directive-comments/disable-enable-pair": "error",
+    "directive-comments/no-aggregating-enable": "error",
+    "directive-comments/no-duplicate-disable": "error",
+    "directive-comments/no-restricted-disable": ["error", "no-debugger"],
+    "directive-comments/no-unlimited-disable": "error",
+    "directive-comments/no-use": [
+      "error",
+      {
+        "allow": [
+          "eslint-disable",
+          "eslint-disable-line",
+          "eslint-disable-next-line",
+          "eslint-enable",
+          "oxlint-disable",
+          "oxlint-disable-line",
+          "oxlint-disable-next-line",
+          "oxlint-enable"
+        ]
+      }
+    ],
     "directive-comments/require-description": "error"
   }
 }
