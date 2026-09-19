@@ -7,6 +7,7 @@
     "directive-comments/no-duplicate-disable": "error",
     "directive-comments/no-restricted-disable": ["error", "no-debugger"],
     "directive-comments/no-unlimited-disable": "error",
+    "directive-comments/no-unsupported-directive": "warn",
     "directive-comments/no-use": [
       "error",
       {
@@ -22,6 +23,7 @@
         ]
       }
     ],
+    "directive-comments/prefer-oxlint-directive": "error",
     "directive-comments/require-description": "error"
   }
 }

@@ -4,7 +4,9 @@ import noAggregatingEnable from "./rules/no-aggregating-enable.ts";
 import noDuplicateDisable from "./rules/no-duplicate-disable.ts";
 import noRestrictedDisable from "./rules/no-restricted-disable.ts";
 import noUnlimitedDisable from "./rules/no-unlimited-disable.ts";
+import noUnsupportedDirective from "./rules/no-unsupported-directive.ts";
 import noUse from "./rules/no-use.ts";
+import preferOxlintDirective from "./rules/prefer-oxlint-directive.ts";
 import requireDescription from "./rules/require-description.ts";
 
 // The short name people write in rule ids, as in "directive-comments/require-description".
@@ -17,7 +19,9 @@ export const rules = {
   "no-duplicate-disable": noDuplicateDisable,
   "no-restricted-disable": noRestrictedDisable,
   "no-unlimited-disable": noUnlimitedDisable,
+  "no-unsupported-directive": noUnsupportedDirective,
   "no-use": noUse,
+  "prefer-oxlint-directive": preferOxlintDirective,
   "require-description": requireDescription,
   // new-rule:end
 };
@@ -36,6 +40,7 @@ export const configs = {
       [`${name}/no-aggregating-enable`]: "error",
       [`${name}/no-duplicate-disable`]: "error",
       [`${name}/no-unlimited-disable`]: "error",
+      [`${name}/no-unsupported-directive`]: "warn",
       // new-rule:recommended:end
     },
   },
